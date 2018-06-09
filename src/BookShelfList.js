@@ -3,6 +3,8 @@ import BookShelf from './BookShelf'
 
 class BookShelfList extends Component {
   render() {
+    const { shelves } = this.props
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -10,9 +12,7 @@ class BookShelfList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf title={'Current Reading'}/>
-            <BookShelf title={'Want to Read'}/>
-            <BookShelf title={'Read'}/>
+            {shelves.map(shelf => <BookShelf title={shelf.title} books={shelf.books}/>)}
           </div>
         </div>
         <div className="open-search">
