@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class Book extends Component {
   render() {
@@ -25,6 +26,16 @@ class Book extends Component {
       </li>
     )
   }
+}
+
+Book.propTypes = {
+  book: PropTypes.shape({
+    imageLinks: PropTypes.shape({
+      smallThumbnail: PropTypes.string
+    }),
+    title: PropTypes.string.isRequired,
+    authors: PropTypes.arrayOf(PropTypes.string)
+  })
 }
 
 export default Book

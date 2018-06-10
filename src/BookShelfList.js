@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import BookShelf from './BookShelf'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
+import BookShelf from './BookShelf'
 
 class BookShelfList extends Component {
   render() {
@@ -28,6 +29,16 @@ class BookShelfList extends Component {
       </div>
     )
   }
+}
+
+BookShelf.propTypes = {
+  shelves: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  })),
+  books: PropTypes.arrayOf(PropTypes.shape({
+    shelf: PropTypes.string.isRequired
+  }))
 }
 
 export default BookShelfList
