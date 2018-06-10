@@ -21,6 +21,17 @@ class BooksSearch extends Component {
       }))
   }
 
+  updateBook = (updatedBook, shelf) => {
+    this.setState(prevState => ({
+      books: prevState.books
+              .filter(book => book.id !== updatedBook.id)
+              .concat([{
+                ...updatedBook,
+                shelf
+              }])
+    }))
+  }
+
   handleChange = (event) => {
     this.setState({
       query: event.target.value
@@ -54,7 +65,7 @@ class BooksSearch extends Component {
               <Book
                 key={book.id}
                 book={book}
-                afterChange={this.searchBooks} />
+                afterChange={this.updateBook} />
             ))}
           </ol>
         </div>

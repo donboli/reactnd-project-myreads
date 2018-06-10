@@ -8,7 +8,7 @@ class Book extends Component {
     BooksAPI
       .update(this.props.book, event.target.value)
       .then(() => {
-        this.props.afterChange()
+        this.props.afterChange(this.props.book, event.target.value)
       })
   }
 
