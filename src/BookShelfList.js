@@ -15,7 +15,7 @@ class BookShelfList extends Component {
     { id: 'read', title: 'Read' }
   ]
 
-  fetchBooks() {
+  fetchBooks = () => {
     BooksAPI.getAll()
       .then((books) => {
         this.setState({
@@ -26,13 +26,6 @@ class BookShelfList extends Component {
 
   componentDidMount() {
     this.fetchBooks()
-  }
-
-  handleBookChange = (changedBook) => {
-    BooksAPI.update(changedBook, changedBook.shelf)
-      .then(() => {
-        this.fetchBooks()
-      })
   }
 
   render() {
@@ -52,7 +45,7 @@ class BookShelfList extends Component {
                   key={shelf.id}
                   title={shelf.title}
                   books={books.filter(book => book.shelf === shelf.id)}
-                  onBookChange={this.handleBookChange}
+                  afterBookChange={this.fetchBooks}
                 />
               ))
             }

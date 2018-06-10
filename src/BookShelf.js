@@ -16,7 +16,7 @@ class BookShelf extends Component {
               <Book
                 key={book.id}
                 book={book}
-                onChange={this.props.onBookChange} />
+                afterChange={this.props.afterBookChange} />
             ))}
           </ol>
         </div>
@@ -30,7 +30,7 @@ BookShelf.propTypes = {
   book: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
-  onBookChange: PropTypes.func.isRequired
+  afterBookChange: PropTypes.func.isRequired
 }
 
 export default BookShelf
