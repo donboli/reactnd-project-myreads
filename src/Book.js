@@ -44,7 +44,8 @@ Book.propTypes = {
     }),
     title: PropTypes.string.isRequired,
     authors: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  onChange: PropTypes.func.isRequired
 }
 
 export default Book

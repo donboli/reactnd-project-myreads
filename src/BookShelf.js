@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import Book from './Book';
 
 class BookShelf extends Component {
-  handleChange = (changedBook) => {
-    this.props.onBookChange(changedBook)
-  }
-
   render() {
     const { title, books } = this.props;
 
@@ -19,7 +16,7 @@ class BookShelf extends Component {
               <Book
                 key={book.id}
                 book={book}
-                onChange={this.handleChange} />
+                onChange={this.props.onBookChange} />
             ))}
           </ol>
         </div>
@@ -32,7 +29,8 @@ BookShelf.propTypes = {
   title: PropTypes.string.isRequired,
   book: PropTypes.shape({
     id: PropTypes.string.isRequired
-  })
+  }),
+  onBookChange: PropTypes.func.isRequired
 }
 
 export default BookShelf

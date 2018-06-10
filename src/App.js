@@ -1,20 +1,22 @@
 import React from 'react'
+import { Route } from 'react-router-dom';
+
 import * as BooksAPI from './BooksAPI'
 import BookSearch from './BookSearch'
 import BookShelfList from './BookShelfList'
-import { Route } from 'react-router-dom';
-import './App.css'
 
-const shelves = [
-  { id: 'currentlyReading', title: 'Current Reading' },
-  { id: 'wantToRead', title: 'Want to Read' },
-  { id: 'read', title: 'Read' }
-]
+import './App.css'
 
 class BooksApp extends React.Component {
   state = {
     books: []
   }
+
+  shelves = [
+    { id: 'currentlyReading', title: 'Current Reading' },
+    { id: 'wantToRead', title: 'Want to Read' },
+    { id: 'read', title: 'Read' }
+  ]
 
   fetchBooks() {
     BooksAPI.getAll()
@@ -43,7 +45,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={() => (
           <BookShelfList
-            shelves={shelves}
+            shelves={this.shelves}
             books={books}
             onBookChange={this.handleBookChange}
           />

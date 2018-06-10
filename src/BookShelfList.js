@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf'
 
 class BookShelfList extends Component {
-  handleBookChange = (changedBook) => {
-    this.props.onBookChange(changedBook)
-  }
-
   render() {
     const { shelves, books } = this.props
 
@@ -18,14 +15,14 @@ class BookShelfList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {!books.length && 'Loading Books...' }
+            {!books.length && 'Loading Shelves...' }
             {books.length > 0 &&
               shelves.map(shelf => (
                 <BookShelf
                   key={shelf.id}
                   title={shelf.title}
                   books={books.filter(book => book.shelf === shelf.id)}
-                  onBookChange={this.handleBookChange}
+                  onBookChange={this.props.onBookChange}
                 />
               ))
             }
@@ -46,7 +43,8 @@ BookShelf.propTypes = {
   })),
   books: PropTypes.arrayOf(PropTypes.shape({
     shelf: PropTypes.string.isRequired
-  }))
+  })),
+  onBookChange: PropTypes.func.isRequired
 }
 
 export default BookShelfList
