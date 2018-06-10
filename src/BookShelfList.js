@@ -38,9 +38,9 @@ class BookShelfList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {!books.length && 'Loading Shelves...' }
-            {books.length > 0 &&
-              this.shelves.map(shelf => (
+            {!books.length
+              ? 'Loading Shelves...'
+              : this.shelves.map(shelf => (
                 <BookShelf
                   key={shelf.id}
                   title={shelf.title}

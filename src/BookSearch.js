@@ -7,14 +7,18 @@ import Book from './Book';
 class BooksSearch extends Component {
   state = {
     query: '',
+    searching: false,
     books: []
   }
 
   searchBooks = () => {
+    this.setState({ searching: true })
     BooksAPI.search(this.state.query)
-      .then((books) => {
-        this.setState({ books })
-      })
+      .then((books) => this.setState({ books, searching: false }))
+      .catch(() => this.setState({
+        books: [],
+        searching: false
+      }))
   }
 
   handleChange = (event) => {
@@ -24,7 +28,7 @@ class BooksSearch extends Component {
   }
 
   render() {
-    const { books, query } = this.state
+    const { books, query, searching } = this.state
 
     return (
       <div className="search-books">
@@ -44,7 +48,9 @@ class BooksSearch extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.map(book => (
+            { books.length === 0 && !searching && 'No books found' }
+            { searching && 'Searching for books...' }
+            { books.length > 0 && !searching && books.map(book => (
               <Book
                 key={book.id}
                 book={book}
