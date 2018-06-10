@@ -1,12 +1,42 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
 import { Link } from 'react-router-dom';
+
+import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 
 class BookShelfList extends Component {
+  state = {
+    books: []
+  }
+
+  shelves = [
+    { id: 'currentlyReading', title: 'Current Reading' },
+    { id: 'wantToRead', title: 'Want to Read' },
+    { id: 'read', title: 'Read' }
+  ]
+
+  fetchBooks() {
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState({
+          books: books
+        })
+      })
+  }
+
+  componentDidMount() {
+    this.fetchBooks()
+  }
+
+  handleBookChange = (changedBook) => {
+    BooksAPI.update(changedBook, changedBook.shelf)
+      .then(() => {
+        this.fetchBooks()
+      })
+  }
+
   render() {
-    const { shelves, books } = this.props
+    const { books } = this.state
 
     return (
       <div className="list-books">
@@ -17,12 +47,12 @@ class BookShelfList extends Component {
           <div>
             {!books.length && 'Loading Shelves...' }
             {books.length > 0 &&
-              shelves.map(shelf => (
+              this.shelves.map(shelf => (
                 <BookShelf
                   key={shelf.id}
                   title={shelf.title}
                   books={books.filter(book => book.shelf === shelf.id)}
-                  onBookChange={this.props.onBookChange}
+                  onBookChange={this.handleBookChange}
                 />
               ))
             }
@@ -34,17 +64,6 @@ class BookShelfList extends Component {
       </div>
     )
   }
-}
-
-BookShelf.propTypes = {
-  shelves: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  })),
-  books: PropTypes.arrayOf(PropTypes.shape({
-    shelf: PropTypes.string.isRequired
-  })),
-  onBookChange: PropTypes.func.isRequired
 }
 
 export default BookShelfList
