@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class Book extends Component {
+  handleChange = (event) => {
+    this.props.onChange({
+      ...this.props.book,
+      shelf: event.target.value
+    })
+  }
+
   render() {
     const { book } = this.props
 
@@ -11,7 +18,9 @@ class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select>
+              <select
+                value={book.shelf}
+                onChange={this.handleChange}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>

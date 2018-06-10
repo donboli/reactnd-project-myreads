@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf'
 
 class BookShelfList extends Component {
+  handleBookChange = (changedBook) => {
+    this.props.onBookChange(changedBook)
+  }
+
   render() {
     const { shelves, books } = this.props
 

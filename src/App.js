@@ -29,13 +29,24 @@ class BooksApp extends React.Component {
     this.fetchBooks()
   }
 
+  handleBookChange = (changedBook) => {
+    BooksAPI.update(changedBook, changedBook.shelf)
+      .then(() => {
+        this.fetchBooks()
+      })
+  }
+
   render() {
     const { books } = this.state
 
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <BookShelfList shelves={shelves} books={books}/>
+          <BookShelfList
+            shelves={shelves}
+            books={books}
+            onBookChange={this.handleBookChange}
+          />
         )} />
         <Route path='/search' component={BookSearch} />
       </div>
