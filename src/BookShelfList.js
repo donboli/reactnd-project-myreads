@@ -14,13 +14,17 @@ class BookShelfList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {shelves.map(shelf => (
-              <BookShelf
-                key={shelf.id}
-                title={shelf.title}
-                books={books.filter(book => book.shelf === shelf.id)}
-              />
-            ))}
+            {!books.length && 'Loading Books...' }
+            {books.length > 0 &&
+              shelves.map(shelf => (
+                <BookShelf
+                  key={shelf.id}
+                  title={shelf.title}
+                  books={books.filter(book => book.shelf === shelf.id)}
+                  onBookChange={this.handleBookChange}
+                />
+              ))
+            }
           </div>
         </div>
         <div className="open-search">
