@@ -15,6 +15,7 @@ class BookShelfList extends Component {
           <div>
             {shelves.map(shelf => (
               <BookShelf
+                key={shelf.id}
                 title={shelf.title}
                 books={books.filter(book => book.shelf === shelf.id)}
               />
