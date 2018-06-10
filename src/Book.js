@@ -5,10 +5,11 @@ import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
   handleChange = (event) => {
+    const newShelf = event.target.value
     BooksAPI
-      .update(this.props.book, event.target.value)
+      .update(this.props.book, newShelf)
       .then(() => {
-        this.props.afterChange(this.props.book, event.target.value)
+        this.props.afterChange(this.props.book, newShelf)
       })
   }
 
