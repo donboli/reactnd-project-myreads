@@ -6,29 +6,67 @@ import Book from './Book';
 
 jest.mock('./BooksAPI', () => 'BooksAPI')
 
+const bookProps = {
+  imageLinks: {
+    smallThumbnail: 'someURL'
+  },
+  title: 'title',
+  authors: ['author1', 'author2'],
+  shelf: 'currentlyReading'
+}
+
+const props = {
+  book: bookProps,
+  afterChange: jest.fn()
+}
+
 describe('Book', function () {
   it('shows the book cover', () => {
-    pending()
+    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+    expect(
+      wrapper
+        .find('.book-cover')
+        .props()
+        .style
+        .backgroundImage
+    ).toContain(bookProps.imageLinks.smallThumbnail)
   })
 
   it('shows the title', () => {
-    pending()
+    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+    expect(
+      wrapper
+        .find('.book-title')
+        .text()
+    ).toEqual(bookProps.title)
   })
 
   it('shows the authors', () => {
-    pending()
+    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+    expect(
+      wrapper
+        .find('.book-authors')
+        .text()
+    ).toEqual(bookProps.authors.join(', '))
   })
 
   describe('shelf selection', () => {
     it('has a select input', () => {
-      pending()
+      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+      expect(wrapper.find('select').length).toBe(1)
     })
 
     it('has 4 shelf options', () => {
-      pending()
+      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+      expect(
+        wrapper
+          .find('select option')
+          .not('[disabled]')
+          .length
+      ).toBe(4)
     })
 
-    it('calls the BookAPI on change', () => {
+    it('calls the BooksAPI on change', () => {
       pending()
     })
 
