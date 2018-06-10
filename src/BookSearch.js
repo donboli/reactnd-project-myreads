@@ -20,7 +20,7 @@ class BooksSearch extends Component {
   handleChange = (event) => {
     this.setState({
       query: event.target.value
-    }, this.searchBooks)
+    }, () => this.searchBooks())
   }
 
   render() {
