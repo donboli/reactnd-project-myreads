@@ -4,7 +4,9 @@ import { shallow } from 'enzyme';
 import * as BooksAPI from './BooksAPI'
 import Book from './Book';
 
-jest.mock('./BooksAPI', () => 'BooksAPI')
+jest.mock('./BooksAPI', () => ({
+  update: jest.fn(() => Promise.resolve())
+}))
 
 const bookProps = {
   imageLinks: {
@@ -67,11 +69,23 @@ describe('Book', function () {
     })
 
     it('calls the BooksAPI on change', () => {
-      pending()
+      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+
+      wrapper
+        .find('select')
+        .simulate('change', { target: { value : 'read' }})
+
+      expect(BooksAPI.update.mock.calls.length).toBe(1)
     })
 
     it('calls the afterChange function after a successful update', () => {
-      pending()
+      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+
+      expect(props.afterChange).toBeCalledWith(props.book, 'read')
+
+      wrapper
+        .find('select')
+        .simulate('change', { target: { value : 'read' }})
     })
   })
 })
