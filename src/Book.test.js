@@ -23,8 +23,13 @@ const props = {
 }
 
 describe('Book', function () {
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
+  })
+
   it('shows the book cover', () => {
-    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
     expect(
       wrapper
         .find('.book-cover')
@@ -35,7 +40,6 @@ describe('Book', function () {
   })
 
   it('shows the title', () => {
-    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
     expect(
       wrapper
         .find('.book-title')
@@ -44,7 +48,6 @@ describe('Book', function () {
   })
 
   it('shows the authors', () => {
-    const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
     expect(
       wrapper
         .find('.book-authors')
@@ -54,12 +57,10 @@ describe('Book', function () {
 
   describe('shelf selection', () => {
     it('has a select input', () => {
-      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
       expect(wrapper.find('select').length).toBe(1)
     })
 
     it('has 4 shelf options', () => {
-      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
       expect(
         wrapper
           .find('select option')
@@ -69,8 +70,6 @@ describe('Book', function () {
     })
 
     it('calls the BooksAPI on change', () => {
-      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
-
       wrapper
         .find('select')
         .simulate('change', { target: { value : 'read' }})
@@ -79,8 +78,6 @@ describe('Book', function () {
     })
 
     it('calls the afterChange function after a successful update', () => {
-      const wrapper = shallow(<Book book={props.book} afterChange={props.afterChange} />)
-
       expect(props.afterChange).toBeCalledWith(props.book, 'read')
 
       wrapper
