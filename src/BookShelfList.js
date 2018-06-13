@@ -37,19 +37,17 @@ class BookShelfList extends Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <div>
-            {!books.length
-              ? 'Loading Shelves...'
-              : this.shelves.map(shelf => (
-                <BookShelf
-                  key={shelf.id}
-                  title={shelf.title}
-                  books={books.filter(book => book.shelf === shelf.id)}
-                  afterBookChange={this.fetchBooks}
-                />
-              ))
-            }
-          </div>
+          {!books.length
+            ? 'Loading Shelves...'
+            : this.shelves.map(shelf => (
+              <BookShelf
+                key={shelf.id}
+                title={shelf.title}
+                books={books.filter(book => book.shelf === shelf.id)}
+                afterBookChange={this.fetchBooks}
+              />
+            ))
+          }
         </div>
         <div className="open-search">
           <Link to='search'>Add a book</Link>
