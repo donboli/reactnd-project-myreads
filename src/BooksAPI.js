@@ -1,4 +1,4 @@
-
+import md5 from 'md5'
 const api = "https://reactnd-books-api.udacity.com"
 
 
@@ -12,6 +12,13 @@ const headers = {
   'Authorization': token
 }
 
+function addHashIds(books) {
+  return books.map((book) => ({
+    ...book,
+    hashId: md5(book.title + book.subtitle + book.publisher)
+  }))
+}
+
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
@@ -20,7 +27,7 @@ export const get = (bookId) =>
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
-    .then(data => data.books)
+    .then(data => addHashIds(data.books))
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
@@ -40,5 +47,6 @@ export const search = (query) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ query })
-  }).then(res => res.json())
-    .then(data => data.books.error ? [] : data.books)
+  })
+  .then(res => res.json())
+  .then(data => data.books.error ? [] : addHashIds(data.books))

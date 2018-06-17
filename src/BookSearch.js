@@ -11,10 +11,24 @@ class BooksSearch extends Component {
     books: []
   }
 
+  componentDidMount() {
+    this.props.fetchShelfBooks();
+  }
+
   searchBooks = () => {
     this.setState({ searching: true })
     BooksAPI.search(this.state.query)
-      .then((books) => this.setState({ books, searching: false }))
+      .then((books) => {
+        const hashIds = this.props.shelfBooks.map((shelfBook) => shelfBook.hashId)
+
+        books.forEach((book) => {
+          if(hashIds.includes(book.hashId)) {
+            const shelfBook = this.props.shelfBooks.find((shelfBook) => shelfBook.hashId === book.hashId)
+            book.shelf = shelfBook.shelf
+          }
+        })
+        this.setState({ books, searching: false })
+      })
       .catch(() => this.setState({
         books: [],
         searching: false
@@ -24,7 +38,7 @@ class BooksSearch extends Component {
   updateBook = (updatedBook, shelf) => {
     this.setState(prevState => ({
       books: prevState.books
-              .filter(book => book.id !== updatedBook.id)
+              .filter(book => book.hashId !== updatedBook.hashId)
               .concat([{
                 ...updatedBook,
                 shelf
@@ -63,7 +77,7 @@ class BooksSearch extends Component {
             { searching && 'Searching for books...' }
             { books.length > 0 && !searching && books.map(book => (
               <Book
-                key={book.id}
+                key={book.hashId}
                 book={book}
                 afterChange={this.updateBook} />
             ))}

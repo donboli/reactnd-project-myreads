@@ -14,7 +14,7 @@ class BookShelf extends Component {
           <ol className="books-grid">
             {books.map(book => (
               <Book
-                key={book.id}
+                key={book.hashId}
                 book={book}
                 afterChange={this.props.afterBookChange} />
             ))}
@@ -29,7 +29,7 @@ BookShelf.propTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired
+      hashId: PropTypes.string.isRequired
     })
   ),
   afterBookChange: PropTypes.func.isRequired
