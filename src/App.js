@@ -21,6 +21,10 @@ class BooksApp extends React.Component {
       })
   }
 
+  componentDidMount() {
+    this.fetchBooks()
+  }
+
   render() {
     const { shelfBooks } = this.state
 
@@ -30,7 +34,7 @@ class BooksApp extends React.Component {
           return <BookShelfList books={shelfBooks} fetchBooks={this.fetchBooks}/>
         }} />
         <Route path='/search' render={() => {
-          return <BookSearch shelfBooks={shelfBooks} fetchShelfBooks={this.fetchBooks} />
+          return <BookSearch shelfBooks={shelfBooks} />
         }} />
       </div>
     )

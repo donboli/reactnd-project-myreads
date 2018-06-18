@@ -2,39 +2,25 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Link, BrowserRouter, Router } from 'react-router-dom'
 
-import * as BooksAPI from './BooksAPI'
 import BookShelfList from './BookShelfList'
 import BookShelf from './BookShelf'
 
 const books = [
-  { id: 'id1', title: 'title1', shelf: 'currentlyReading' },
-  { id: 'id2', title: 'title2', shelf: 'currentlyReading' },
-  { id: 'id3', title: 'title3', shelf: 'wantToRead' },
-  { id: 'id4', title: 'title4', shelf: 'wantToRead' },
-  { id: 'id5', title: 'title5', shelf: 'read' },
-  { id: 'id6', title: 'title6', shelf: 'read' }
+  { id: 'id1', title: 'title1', shelf: 'currentlyReading', hashId: 'i45uhtrnegkjwernrjg' },
+  { id: 'id2', title: 'title2', shelf: 'currentlyReading', hashId: 'i45uhtrnegkj234nrjg' },
+  { id: 'id3', title: 'title3', shelf: 'wantToRead', hashId: 'i45uhtrnegkjnsdfrjg' },
+  { id: 'id4', title: 'title4', shelf: 'wantToRead', hashId: 'i45uhtrnegkj234nrjg' },
+  { id: 'id5', title: 'title5', shelf: 'read', hashId: 'i45uhtrn123egkjnrjg' },
+  { id: 'id6', title: 'title6', shelf: 'read', hashId: 'i45uhtrnsdf3egkjnrjg' }
 ]
 
-jest.mock('./BooksAPI', () => ({
-  getAll: jest.fn(() => Promise.resolve([
-    { id: 'id1', title: 'title1', shelf: 'currentlyReading' },
-    { id: 'id2', title: 'title2', shelf: 'currentlyReading' },
-    { id: 'id3', title: 'title3', shelf: 'wantToRead' },
-    { id: 'id4', title: 'title4', shelf: 'wantToRead' },
-    { id: 'id5', title: 'title5', shelf: 'read' },
-    { id: 'id6', title: 'title6', shelf: 'read' }
-  ]))
-}))
+const fetchBooks = jest.fn()
 
 describe('BookShelfList', function () {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<BookShelfList />)
-  })
-
-  it('calls BooksAPI#getAll on mount', () => {
-    expect(BooksAPI.getAll).toBeCalled()
+    wrapper = shallow(<BookShelfList books={[]} fetchBooks={fetchBooks} />)
   })
 
   it('displays a Link to the search path', () => {
@@ -49,7 +35,7 @@ describe('BookShelfList', function () {
 
   describe('when books are set', () => {
     beforeEach(() => {
-      wrapper.update()
+      wrapper = shallow(<BookShelfList books={books} fetchBooks={fetchBooks} />)
     })
 
     it('renders 3 BookShelfs', () => {
@@ -57,20 +43,14 @@ describe('BookShelfList', function () {
     })
 
     it('passes the books to the right shelves', () => {
-      expect(wrapper.find(BookShelf).first().props().books).toEqual([
-        { id: 'id1', title: 'title1', shelf: 'currentlyReading' },
-        { id: 'id2', title: 'title2', shelf: 'currentlyReading' }
-      ])
+      expect(wrapper.find(BookShelf).first().props().books)
+        .toEqual(books.filter(book => book.shelf === 'currentlyReading'))
 
-      expect(wrapper.find(BookShelf).at(1).props().books).toEqual([
-        { id: 'id3', title: 'title3', shelf: 'wantToRead' },
-        { id: 'id4', title: 'title4', shelf: 'wantToRead' }
-      ])
+      expect(wrapper.find(BookShelf).at(1).props().books)
+        .toEqual(books.filter(book => book.shelf === 'wantToRead'))
 
-      expect(wrapper.find(BookShelf).at(2).props().books).toEqual([
-        { id: 'id5', title: 'title5', shelf: 'read' },
-        { id: 'id6', title: 'title6', shelf: 'read' }
-      ])
+      expect(wrapper.find(BookShelf).at(2).props().books)
+        .toEqual(books.filter(book => book.shelf === 'read'))
     })
   })
 })

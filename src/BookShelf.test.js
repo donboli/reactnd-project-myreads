@@ -7,12 +7,12 @@ import Book from './Book';
 const props = {
   title: 'title',
   books: [
-    { id: 'id1', title: 'title1' },
-    { id: 'id2', title: 'title2' },
-    { id: 'id3', title: 'title3' },
-    { id: 'id4', title: 'title4' },
-    { id: 'id5', title: 'title5' },
-    { id: 'id6', title: 'title6' }
+    { id: 'id1', title: 'title1', hashId: 'i45uhtrnegkjwernrjg' },
+    { id: 'id2', title: 'title2', hashId: 'i45uhtrnegkj234nrjg' },
+    { id: 'id3', title: 'title3', hashId: 'i45uhtrnegkjnsdfrjg' },
+    { id: 'id4', title: 'title4', hashId: 'i45uhtrnegkj234nrjg' },
+    { id: 'id5', title: 'title5', hashId: 'i45uhtrn123egkjnrjg' },
+    { id: 'id6', title: 'title6', hashId: 'i45uhtrnsdf3egkjnrjg' }
   ],
   afterBookChange: jest.fn()
 }

@@ -7,22 +7,22 @@ import BookSearch from './BookSearch'
 import Book from './Book'
 
 const books = [
-  { id: 'id1', title: 'title1', shelf: 'currentlyReading' },
-  { id: 'id2', title: 'title2', shelf: 'currentlyReading' },
-  { id: 'id3', title: 'title3', shelf: 'wantToRead' },
-  { id: 'id4', title: 'title4', shelf: 'wantToRead' },
-  { id: 'id5', title: 'title5', shelf: 'read' },
-  { id: 'id6', title: 'title6', shelf: 'read' }
+  { id: 'id1', title: 'title1', shelf: 'currentlyReading', hashId: 'i45uhtrnegkjwernrjg' },
+  { id: 'id2', title: 'title2', shelf: 'currentlyReading', hashId: 'i45uhtrnegkj234nrjg' },
+  { id: 'id3', title: 'title3', shelf: 'wantToRead', hashId: 'i45uhtrnegkjnsdfrjg' },
+  { id: 'id4', title: 'title4', shelf: 'wantToRead', hashId: 'i45uhtrnegkj234nrjg' },
+  { id: 'id5', title: 'title5', shelf: 'read', hashId: 'i45uhtrn123egkjnrjg' },
+  { id: 'id6', title: 'title6', shelf: 'read', hashId: 'i45uhtrnsdf3egkjnrjg' }
 ]
 
 jest.mock('./BooksAPI', () => ({
   search: jest.fn(() => Promise.resolve([
-    { id: 'id1', title: 'title1', shelf: 'currentlyReading' },
-    { id: 'id2', title: 'title2', shelf: 'currentlyReading' },
-    { id: 'id3', title: 'title3', shelf: 'wantToRead' },
-    { id: 'id4', title: 'title4', shelf: 'wantToRead' },
-    { id: 'id5', title: 'title5', shelf: 'read' },
-    { id: 'id6', title: 'title6', shelf: 'read' }
+    { id: 'id1', title: 'title1', shelf: 'currentlyReading', hashId: 'i45uhtrnegkjwernrjg' },
+    { id: 'id2', title: 'title2', shelf: 'currentlyReading', hashId: 'i45uhtrnegkj234nrjg' },
+    { id: 'id3', title: 'title3', shelf: 'wantToRead', hashId: 'i45uhtrnegkjnsdfrjg' },
+    { id: 'id4', title: 'title4', shelf: 'wantToRead', hashId: 'i45uhtrnegkj234nrjg' },
+    { id: 'id5', title: 'title5', shelf: 'read', hashId: 'i45uhtrn123egkjnrjg' },
+    { id: 'id6', title: 'title6', shelf: 'read', hashId: 'i45uhtrnsdf3egkjnrjg' }
   ]))
 }))
 
@@ -30,7 +30,7 @@ describe('BookSearch', function () {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<BookSearch />)
+    wrapper = shallow(<BookSearch shelfBooks={books} />)
   })
 
   it('has a link to the root path', () => {

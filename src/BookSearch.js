@@ -11,10 +11,6 @@ class BooksSearch extends Component {
     books: []
   }
 
-  componentDidMount() {
-    this.props.fetchShelfBooks();
-  }
-
   searchBooks = () => {
     this.setState({ searching: true })
     BooksAPI.search(this.state.query)
